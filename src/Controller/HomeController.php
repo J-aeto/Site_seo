@@ -37,11 +37,10 @@ class HomeController extends AbstractController
                 $finalText = $finalText . '#' . $v;
             }    
         }
-        //$textTrans = $callApiService->getRewriterData($finalText);
-        //$textTrans = $textTrans['rewrite'];
+        $textTrans = $callApiService->getRewriterData($finalText);
+        $textTrans = $textTrans['rewrite'];
 
-        //$text_output =  u($textTrans)->split('#');
-        $text_output = [];
+        $text_output =  u($textTrans)->split('#');
        }
        // ADD sécurité sur la sortie formulaire
        
