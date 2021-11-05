@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block body %}
+
+<form  action="{{ path('home') }}" method="post" name="form_text">
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Entrez le texte a modifier</label>
+    <textarea class="form-control" id="modify_text" name="modify_text" rows="3"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary mb-2">Analyse</button>
+</form>
+{% if text_output %}
+<div class="row">
+<div class="jumbotron jumbotron-fluid col">
+  <div class="container">
+    <h1 class="display-4">Votre texte original :</h1>
+    <p class="lead">
+    {% for p in original_text %}
+        {{ p }} <br><br>
+    {% endfor %}
+    </p>
+  </div>
+</div>
+<div class="jumbotron jumbotron-fluid col">
+<div class="container">
+    <h1 class="display-4">Votre texte transformé :</h1>
+    <p class="lead">
+    {% for p in text_output %}
+        {{ p }} <br><br>
+    {% endfor %}
+    </p>
+  </div>
+  
+</div>
+</div>
+{% endif %}
+
+{% endblock %}
