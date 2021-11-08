@@ -31,16 +31,43 @@ class HomeController extends AbstractController
                 array_push($textArray, $v);
             }
         }
-        $finalText = $textArray[0];
         foreach ($textArray as $k => $v) {
-            if ($k != 0) {
+            $tag = preg_split('/[>]/', $v);
+            if ($tag[0] !== "<h2") {
+                $finalText = $v;
+                $firstKey = $k;
+                break 1;
+            }    
+        }
+        foreach ($textArray as $k => $v) {
+            $tag = preg_split('/[>]/', $v);
+            if ($k != 0 && $k != $firstKey && $tag[0] !== "<h2") {
                 $finalText = $finalText . '#' . $v;
             }    
         }
         $textTrans = $callApiService->getRewriterData($finalText);
         $textTrans = $textTrans['rewrite'];
 
-        $text_output =  u($textTrans)->split('#');
+        $preTextOutput =  u($textTrans)->split('#');
+        //$preTextOutput =  u($finalText)->split('#');
+        $text_output = $textArray;
+        $count = 0;
+        $length = count($text_output);
+        foreach($preTextOutput as $k => $v){
+            $i = 0;
+            echo "v" . $v . "<br>";
+            for ($i=$count; $i < $length; $i++) {
+                $tag = preg_split('/[>]/', $text_output[$i]);
+                if ($tag[0] !== "<h2") {
+                    echo "i" . $i . "<br>";
+                    echo "k" . $k . "<br>";
+                    
+                    $text_output[$i] = $v;
+                    $count = $i + 1;
+                    break 1;
+                }
+            }
+        }
        }
        // ADD sécurité sur la sortie formulaire
        
@@ -52,3 +79,4 @@ class HomeController extends AbstractController
    }
    // A faire une fonction a part pour l'affichage et la requete api
 }
+
