@@ -24,15 +24,20 @@ class HomeController extends AbstractController
        $textArray = [];
        if ($text) {
         $textparse = preg_replace( "/\r|\n/", "#", $text );
+        $mask = ["fastcompare","FastCompare","Fastcompare", "lelynx", "LeLynx", "Lelynx", "LeLynx.fr", "jechange", "JeChange", "jeChange"];
+        
         $textparse = u($textparse)->split('#');
         
         foreach ($textparse as $k => $v) {
             if (strlen($v) > 1){
-                array_push($textArray, $v);
+                $vParse = preg_replace( '/<a\shref=\".*\">(.+<\/a>)/', '<a href="">$1', $v );
+                $vParse = preg_replace( '/<h2\sid=\".*\">/', '<h2>$1', $vParse );
+                $vParse = str_replace($mask, "RapideCompare", $vParse);
+                array_push($textArray, $vParse);
             }
         }
         foreach ($textArray as $k => $v) {
-            $tag = preg_split('/[>]/', $v);
+            $tag = substr($v, 0, 3);
             if ($tag[0] !== "<h2") {
                 $finalText = $v;
                 $firstKey = $k;
@@ -40,7 +45,7 @@ class HomeController extends AbstractController
             }    
         }
         foreach ($textArray as $k => $v) {
-            $tag = preg_split('/[>]/', $v);
+            $tag = substr($v, 0, 3);
             if ($k != 0 && $k != $firstKey && $tag[0] !== "<h2") {
                 $finalText = $finalText . '#' . $v;
             }    
@@ -55,13 +60,9 @@ class HomeController extends AbstractController
         $length = count($text_output);
         foreach($preTextOutput as $k => $v){
             $i = 0;
-            echo "v" . $v . "<br>";
             for ($i=$count; $i < $length; $i++) {
-                $tag = preg_split('/[>]/', $text_output[$i]);
+                $tag = substr($text_output[$i], 0, 3);
                 if ($tag[0] !== "<h2") {
-                    echo "i" . $i . "<br>";
-                    echo "k" . $k . "<br>";
-                    
                     $text_output[$i] = $v;
                     $count = $i + 1;
                     break 1;

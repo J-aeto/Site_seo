@@ -12,7 +12,7 @@ class CallApiService
     public function __construct(HttpClientInterface $client)
     {
         $this->client = $client;
-        $this->rapidApiKey = 'A REMPLIR AVEC LA VRAI KEY';
+        $this->rapidApiKey = 'CLE API ICI';
     }
  
     public function getRewriterData(string $text)
