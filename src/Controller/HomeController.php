@@ -15,10 +15,13 @@ use Symfony\Component\Validator\Constraints\Length;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/home_seo", name="home_seo")
      */
     public function index(CallApiService $callApiService, Request $request): Response
    {
+    $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+    $user = $this->getUser();
+    if ($user){
        $text = $request->get('modify_text');
        $text_output = '';
        $textArray = [];
@@ -77,6 +80,8 @@ class HomeController extends AbstractController
            'text_output' => $text_output,
            'original_text' => $textArray
        ]);
+    }
+    return $this->redirectToRoute('app_login');
    }
    // A faire une fonction a part pour l'affichage et la requete api
 }
