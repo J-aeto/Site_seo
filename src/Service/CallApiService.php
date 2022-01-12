@@ -12,10 +12,10 @@ class CallApiService
     public function __construct(HttpClientInterface $client)
     {
         $this->client = $client;
-        $this->rapidApiKey = 'CLE API ICI';
+        $this->rapidApiKey = 'Clé API ici';
     }
  
-    public function getRewriterData(string $text)
+    public function getRewriterData(string $text, string $lang)
     {
         $response = $this->client->request('POST', 'https://rewriter-paraphraser-text-changer-multi-language.p.rapidapi.com/rewrite', [
             'headers' => [
@@ -24,7 +24,7 @@ class CallApiService
                 'x-rapidapi-key' => $this->rapidApiKey
             ],
             'json' => [
-                "language" => "fr",
+                "language" => $lang,
                 "strength"=> 3,
                 "text" => $text
             ],

@@ -4,10 +4,17 @@
 
 {% block body %}
 
-<form  action="{{ path('home') }}" method="post" name="form_text">
+<form  action="{{ path('app_seo') }}" method="post" name="form_text">
   <div class="form-group">
     <label for="exampleFormControlTextarea1">Entrez le texte a modifier</label>
     <textarea class="form-control" id="modify_text" name="modify_text" rows="3"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Selectionnez la langue</label>
+    <select class="form-control" id="select_lang" name="select_lang">
+      <option value="fr">Fr</option>
+      <option value="en">En</option>
+    </select>
   </div>
   <button type="submit" class="btn btn-primary mb-2">Analyse</button>
 </form>

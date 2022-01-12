@@ -15,14 +15,18 @@ use Symfony\Component\Validator\Constraints\Length;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/app_seo", name="app_seo")
      */
     public function index(CallApiService $callApiService, Request $request): Response
    {
        $text = $request->get('modify_text');
+       if($request->get('select_lang') == 'fr' || $request->get('select_lang') == 'en'){
+            $lang = $request->get('select_lang');
+       }
        $text_output = '';
        $textArray = [];
        if ($text) {
+   
         $textparse = preg_replace( "/\r|\n/", "#", $text );
         $mask = ["fastcompare","FastCompare","Fastcompare", "lelynx", "LeLynx", "Lelynx", "LeLynx.fr", "jechange", "JeChange", "jeChange"];
         
@@ -50,7 +54,7 @@ class HomeController extends AbstractController
                 $finalText = $finalText . '#' . $v;
             }    
         }
-        $textTrans = $callApiService->getRewriterData($finalText);
+        $textTrans = $callApiService->getRewriterData($finalText, $lang);
         $textTrans = $textTrans['rewrite'];
 
         $preTextOutput =  u($textTrans)->split('#');

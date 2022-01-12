@@ -1,0 +1,5 @@
+App développer en Symfony 4 , php 7.4
+
+L'app sert a reécrire un text grâce a une api (rewriter)
+Les routes sont constituer dans les annotations dans les controller et la route principale est /app_seo
+l'app est en v1
